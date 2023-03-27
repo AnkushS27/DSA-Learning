@@ -58,3 +58,111 @@ int main()
 
     return 0;
 }
+
+// BFS Traversal - 
+/*
+T.C = O(n + m)    ; n = no. of vertex, m = no. of edges 
+
+#include <bits/stdc++.h> 
+
+void prepareAdjList(unordered_map<int, set<int>> &adjList, vector<pair<int, int>> &edges){
+    for(int i=0; i<edges.size(); i++){
+        int u = edges[i].first;
+        int v = edges[i].second;
+        
+        adjList[u].insert(v);
+        adjList[v].insert(u);
+    }
+}
+
+void bfs(unordered_map<int, set<int>> &adjList, unordered_map<int, bool> &visited, vector<int> &ans, int node){
+    queue<int> q;
+    q.push(node);
+    visited[node] = 1;
+
+    while(!q.empty()){
+        int frontNode = q.front();
+        q.pop();
+
+        //store frontNOde into ans
+        ans.push_back(frontNode);
+
+        //traverse all neighbors of frontNOde
+        for(auto i:adjList[frontNode]){
+            if(!visited[i]){
+                q.push(i);
+                visited[i] = 1;
+            }
+        }
+    }
+}
+
+vector<int> BFS(int vertex, vector<pair<int, int>> edges)
+{
+    unordered_map<int, set<int>> adjList;
+    vector<int> ans;
+    unordered_map<int, bool> visited;
+
+    prepareAdjList(adjList, edges);
+
+    // traverse all component of a graph
+    for(int i=0; i<vertex; i++){
+        if(!visited[i]){
+            bfs(adjList, visited, ans, i);
+        }
+    }
+
+    return ans;
+}
+
+*/
+
+// DFS Traversal
+// T.C = O(n+m)     ; n = no. of vertex, m = no. of edges 
+/*
+
+#include <bits/stdc++.h>
+
+void dfs(int node, unordered_map<int, set<int>> &adjList, unordered_map<int, bool> &visited, vector<int> &component){
+    // ans store
+    component.push_back(node);
+    
+    // mark visited
+    visited[node] = 1;
+
+    // har connected node ke liye recursive call
+    for(auto i:adjList[node]){
+        if(!visited[i]){
+            dfs(i, adjList, visited, component);
+        }
+    }
+}
+
+vector<vector<int>> depthFirstSearch(int V, int E, vector<vector<int>> &edges)
+{
+    // prepare adjacency list
+    unordered_map<int, set<int>> adjList;
+    for(int i=0; i<edges.size(); i++){
+        int u = edges[i][0];
+        int v = edges[i][1];
+        
+        adjList[u].insert(v);
+        adjList[v].insert(u);
+    }
+    
+    vector<vector<int>> ans;
+    unordered_map<int, bool> visited;
+
+    // traverse all component of a graph
+    for(int i=0; i<V; i++){
+        if(!visited[i]){
+            vector<int> component;
+            dfs(i, adjList, visited, component);
+            ans.push_back(component);
+        }
+    }
+
+    return ans;
+}
+
+*/
